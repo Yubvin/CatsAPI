@@ -1,14 +1,24 @@
 package com.catsapi;
 
+import javax.persistence.*;
+
 /**
  * Created by mac on 09.02.17.
  */
+@Entity
 public class Cat {
 
-    private static long nextId = 1;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+
+    @Column(nullable = false)
     private String name;
+
+    @Column(nullable = false)
     private short age;
+
+    @Column(nullable = false)
     private String breed;
 
 
@@ -16,8 +26,6 @@ public class Cat {
     }
 
     public Cat(String name, short age, String breed) {
-        this.id = nextId;
-        nextId++;
         this.name = name;
         this.age = age;
         this.breed = breed;

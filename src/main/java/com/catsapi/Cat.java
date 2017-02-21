@@ -21,6 +21,8 @@ public class Cat {
     @Column(nullable = false)
     private String breed;
 
+    @Column(nullable = false)
+    private String imgName;
 
     public Cat() {
     }
@@ -29,6 +31,14 @@ public class Cat {
         this.name = name;
         this.age = age;
         this.breed = breed;
+        this.imgName = "default-cat.jpg";
+    }
+
+    public Cat(String name, short age, String breed, String imgName) {
+        this.name = name;
+        this.age = age;
+        this.breed = breed;
+        this.imgName = imgName;
     }
 
     public long getId() {
@@ -63,6 +73,14 @@ public class Cat {
         this.breed = breed;
     }
 
+    public String getImgName() {
+        return imgName;
+    }
+
+    public void setImgName(String imgName) {
+        this.imgName = imgName;
+    }
+
     @Override
     public String toString() {
         return "Cat{" +
@@ -70,6 +88,7 @@ public class Cat {
                 ", name='" + name + '\'' +
                 ", age='" + age + '\'' +
                 ", breed='" + breed + '\'' +
+                ", imgName='" + imgName + '\'' +
                 '}';
     }
 }

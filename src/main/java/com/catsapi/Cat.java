@@ -27,6 +27,14 @@ public class Cat {
     public Cat() {
     }
 
+    public Cat(Cat cat) {
+        this.id = cat.id;
+        this.name = cat.name;
+        this.age = cat.age;
+        this.breed = cat.breed;
+        this.imgName = cat.imgName;
+    }
+
     public Cat(String name, short age, String breed) {
         this.name = name;
         this.age = age;

@@ -54,6 +54,20 @@ public class CatService {
         return new ResponseEntity<>(repository.findOne(id),HttpStatus.OK);
     }
 
+    @RequestMapping(value="name/{name}",method = RequestMethod.GET)
+    public ResponseEntity<Collection<Cat>> getCatsByName(@PathVariable String name){
+        return new ResponseEntity<>((Collection<Cat>) repository.findByName(name), HttpStatus.OK);
+    }
+    @RequestMapping(value="age/{age}",method = RequestMethod.GET)
+    public ResponseEntity<Collection<Cat>> getCatsByAge(@PathVariable short age){
+        return new ResponseEntity<>((Collection<Cat>) repository.findByAge(age), HttpStatus.OK);
+    }
+
+    @RequestMapping(value="breed/{breed}",method = RequestMethod.GET)
+    public ResponseEntity<Collection<Cat>> getCatsByBreed(@PathVariable String breed){
+        return new ResponseEntity<>((Collection<Cat>) repository.findByBreed(breed), HttpStatus.OK);
+    }
+
     private static String getFileExtension(MultipartFile file) {
         String fileName = file.getOriginalFilename();
         if(fileName.lastIndexOf(".") != -1 && fileName.lastIndexOf(".") != 0)
@@ -67,6 +81,8 @@ public class CatService {
             ,@RequestParam(value="breed", defaultValue = "unknown") String breed
             ,@RequestParam(value="image", required=false) MultipartFile file){
 
+        System.out.println("name: " + name);
+        System.out.println("Img name: " + file);
         Cat newCat = null;
 
         if (file!=null && !file.isEmpty()) {
@@ -121,8 +137,9 @@ public class CatService {
     public ResponseEntity<?> deleteCat(@PathVariable long id) throws Exception {
 
         if (repository.exists(id)) {
+            Cat cat = new Cat(repository.findOne(id));
             repository.delete(id);
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>(cat, HttpStatus.OK);
         } else {
             throw new Exception("Cat " + id + " does not exists");
         }

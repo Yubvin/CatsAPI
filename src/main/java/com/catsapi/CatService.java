@@ -81,8 +81,6 @@ public class CatService {
             ,@RequestParam(value="breed", defaultValue = "unknown") String breed
             ,@RequestParam(value="image", required=false) MultipartFile file){
 
-        System.out.println("name: " + name);
-        System.out.println("Img name: " + file);
         Cat newCat = null;
 
         if (file!=null && !file.isEmpty()) {
@@ -139,6 +137,7 @@ public class CatService {
         if (repository.exists(id)) {
             Cat cat = new Cat(repository.findOne(id));
             repository.delete(id);
+            storageService.delete(cat.getImgName());
             return new ResponseEntity<>(cat, HttpStatus.OK);
         } else {
             throw new Exception("Cat " + id + " does not exists");

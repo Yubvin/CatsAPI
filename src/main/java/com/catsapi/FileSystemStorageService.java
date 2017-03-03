@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -34,6 +35,22 @@ public class FileSystemStorageService implements StorageService {
         } catch (IOException e) {
             throw new StorageException("Failed to store file " + file.getOriginalFilename(), e);
         }
+    }
+
+    @Override
+    public void delete(String filename){
+
+        if(filename.equals("default-cat.jpg")) return;
+
+        Path pathFile = Paths.get(rootLocation + "/" + filename);
+        try {
+            Files.delete(pathFile);
+        } catch (NoSuchFileException e) {
+            throw new StorageException(filename + "does not exist!", e);
+        } catch (IOException e) {
+            throw new StorageException("Failed to delete file " + filename, e);
+        }
+
     }
 
     @Override
